@@ -11,6 +11,7 @@ public class ComplexNumber {
         this.im = im;
     }
 
+    /*Check if imag. part is negative to display the number in a proper way*/
     @Override
     public String toString() {
         String result = "";
