@@ -16,14 +16,13 @@ public class Main {
 
     private static Scanner scanner = new Scanner(System.in);
     private static List<Book> books = new ArrayList<>();
-    private static String input;
-    private static Book newBook;
+
 
     public static void main(String[] args) {
+        Book newBook = null;
+        String input;
 
         while(true) {
-
-            /*Check addition*/
             lNew:
             while(true) {
                 System.out.println("New book?(yes/no)");
@@ -118,9 +117,23 @@ public class Main {
                 break;
             }
 
-            books.add(newBook);
+            addNewBook(newBook);
             System.out.println("Books:\n" + books.toString());
+
+            newBook = BookChecks.findLongestBook(books);
+            System.out.println("Longest:\n" + newBook);
         }
+    }
+
+    private static void addNewBook(Book book) {
+        for(Book b : books) {
+            if(BookChecks.checkDuplicate(book, b)) {
+                System.out.println("Duplicate book!");
+                return;
+            }
+        }
+
+        books.add(book);
     }
 
     /*basic check for new input*/

@@ -51,7 +51,32 @@ public class Book {
 
     @Override
     public String toString() {
-        return "\nTitle: " + title + '\n' + "Author: " + author + '\n' +
+        return "\nTitle: " + title.toUpperCase() + '\n' + "Author: " + author + '\n' +
                "Publisher: " + publisher + '\n' + "Pages: " + pages + "\n";
+    }
+
+    /*default smartass IntelliJ equals*/
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+
+        Book book = (Book) o;
+
+        if (!title.equals(book.title)) return false;
+        if (!author.equals(book.author)) return false;
+        if (!publisher.equals(book.publisher)) return false;
+        return pages.equals(book.pages);
+
+    }
+
+    /*default IntelliJ hashcode*/
+    @Override
+    public int hashCode() {
+        int result = title.hashCode();
+        result = 31 * result + author.hashCode();
+        result = 31 * result + publisher.hashCode();
+        result = 31 * result + pages.hashCode();
+        return result;
     }
 }
