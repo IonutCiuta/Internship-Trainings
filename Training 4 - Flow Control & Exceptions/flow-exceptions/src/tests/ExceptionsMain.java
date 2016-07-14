@@ -42,6 +42,7 @@ public class ExceptionsMain {
         }
     }
 
+    /* I wish i knew about this sooner */
     private static void textTryCatchWithResources() {
         try (ClosableImpl obj = new ClosableImpl()) {
             obj.doStuff();
