@@ -1,13 +1,11 @@
 package com.training.example;
 
-import com.training.annotation.Author;
-import com.training.annotation.ExecutionPriority;
-import com.training.annotation.PrintPriority;
-import com.training.annotation.Test;
+import com.training.annotation.*;
 
 /**
  * Created by dbati on 13.07.2016.
  */
+@Skip(ignore=false)
 @Author(createdBy = "Dmitri", priority = Author.Priority.MEDIUM, tags = {"Grads", "Training"})
 @ExecutionPriority(priority = ExecutionPriority.Priority.HIGH)
 public class TestExample4 {

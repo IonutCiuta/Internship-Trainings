@@ -1,9 +1,6 @@
 package com.training;
 
-import com.training.annotation.Author;
-import com.training.annotation.ExecutionPriority;
-import com.training.annotation.PrintPriority;
-import com.training.annotation.Test;
+import com.training.annotation.*;
 import com.training.example.TestExample;
 import org.reflections.Reflections;
 
@@ -92,6 +89,14 @@ public class Main {
         Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(ExecutionPriority.class);
 
         for (Class<?> clazz : annotated) {
+            if(clazz.isAnnotationPresent(Skip.class)) {
+                Skip annotation = clazz.getAnnotation(Skip.class);
+                if(annotation.ignore()) {
+                    System.out.println("Skipping: " + clazz.getSimpleName());
+                    continue;
+                }
+            }
+
             if (clazz.isAnnotationPresent(ExecutionPriority.class)) {
                 Annotation annotation = clazz.getAnnotation(ExecutionPriority.class);
 
