@@ -1,4 +1,4 @@
-package demo;
+package generics;
 
 /**
  * Created by iciuta on 7/15/2016.

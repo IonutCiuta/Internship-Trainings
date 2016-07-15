@@ -1,7 +1,4 @@
-package demo;
-
-import java.util.ArrayList;
-import java.util.List;
+package generics;
 
 /**
  * Created by iciuta on 7/15/2016.
