@@ -9,7 +9,7 @@ import java.util.Random;
  * Created by iciuta on 7/18/2016.
  */
 public class PenguinFunExtra {
-    private static final int COUNT = 800 * 100;
+    private static final int COUNT = 800 * 100; //takes ~min to run test
     private static final PenguinHatchery hatchery = new PenguinHatchery();
     private static final Random rand = new Random();
 
@@ -37,6 +37,7 @@ public class PenguinFunExtra {
         return result;
     }
 
+    @Deprecated
     private static void test() {
         Random rand = new Random();
         int index = rand.nextInt(COUNT);
@@ -90,15 +91,14 @@ public class PenguinFunExtra {
             identicalHashcodeMap.put(babyPenguin, true);
         }
 
-
-        /* normal hashcode */
+        /* normal hashcode -> get is occurs instantly*/
         Penguin.SAME_HASHCODE = false;
         start = System.currentTimeMillis();
         normalHashcodeMap.get(theChosenPenguin);
         end = System.currentTimeMillis();
         System.out.println("Normal hashcode: " + (end - start));
 
-        /* normal hashcode */
+        /* same hashcode -> the time difference is noticeable */
         Penguin.SAME_HASHCODE = true;
         start = System.currentTimeMillis();
         identicalHashcodeMap.get(theChosenPenguin);

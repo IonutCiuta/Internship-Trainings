@@ -3,37 +3,42 @@ package homework;
 import java.util.*;
 
 public class PenguinFun {
-	private static final int GREATER =  1;
-	private static final int LESSER  = -1;
 	private static final int EQUAL   =  0;
 
 	private static final PenguinHatchery hatchery = new PenguinHatchery();
 
 	public static void main(String [] args){
+		System.out.println("PENGUIN LIST:");
 		List<Penguin> penguinList = getPenguinList();
 		display(penguinList); //displays penguins in the order they were hatched
 
 		System.out.println();
 
+		System.out.println("PENGUIN SET:");
 		Set<Penguin> penguinSet = new HashSet<>(penguinList);
 		display(penguinSet); //displays penguins in a different order; HashSet does not keep the order of its elements
 
 		System.out.println();
 
+		System.out.println("PENGUIN LIST - RACE/AGE SORTED:");
 		orderPenguinListByRaceAndAge(penguinList);
 		display(penguinList);
 
 		System.out.println();
+
+		System.out.println("PENGUIN LIST - WITH MATES:");
 		matePenguins(penguinList);
 		display(penguinList);
 
 		System.out.println();
 
+		System.out.println("PENGUIN LIST - MATE SORTED:");
 		orderPenguinsByMates(penguinList);
 		display(penguinList);
 
 		System.out.println();
 
+		System.out.println("PENGUIN MAP:");
 		HashMap<String, HashSet<Penguin>> penguinMap = transformPenguinListToMap(penguinList);
 		displayPenguinMap(penguinMap);
 	}
@@ -42,24 +47,11 @@ public class PenguinFun {
 		Collections.sort(input, new Comparator<Penguin>() {
 			@Override
 			public int compare(Penguin p1, Penguin p2) {
-				if(p1.getRaceAsString().compareTo(p2.getRaceAsString()) < 0)
-					return LESSER;
-
-				if(p1.getRaceAsString().compareTo(p2.getRaceAsString()) > 0)
-					return GREATER;
-
 				if(p1.getRaceAsString().compareTo(p2.getRaceAsString()) == 0) {
-					if(p1.getAge() < p2.getAge())
-						return LESSER;
-
-					if(p1.getAge() > p2.getAge())
-						return GREATER;
-
-					if(p1.getAge() == p2.getAge())
-						return EQUAL;
+					return EQUAL;
+				} else {
+					return p1.getRaceAsString().compareTo(p2.getRaceAsString());
 				}
-
-				return LESSER;
 			}
 		});
 	}
@@ -68,39 +60,24 @@ public class PenguinFun {
 		Collections.sort(penguins, new Comparator<Penguin>() {
 			@Override
 			public int compare(Penguin p1, Penguin p2) {
-				if(p1.getMatesCount() < p2.getMatesCount()) {
-					return LESSER;
-				}
-
-				if(p1.getMatesCount() > p2.getMatesCount()) {
-					return GREATER;
-				}
-
-				if(p1.getMatesCount() == p2.getMatesCount()) {
-					if(p1.getMateAgeAverage() < p2.getMateAgeAverage()) {
-						return LESSER;
-					}
-
-					if(p1.getMateAgeAverage() > p2.getMateAgeAverage()) {
-						return GREATER;
-					}
-
-					if(p1.getMateAgeAverage() == p2.getMateAgeAverage()) {
-						if(p1.getName().charAt(6) < p2.getName().charAt(6)) {
-							return LESSER;
-						}
-
-						if(p1.getName().charAt(6) > p2.getName().charAt(6)) {
-							return GREATER;
-						}
-
-						if(p1.getName().charAt(6) == p2.getName().charAt(6)) {
+				if (p1.getMatesCount() == p2.getMatesCount()) {
+					if (p1.getMateAgeAverage() == p2.getMateAgeAverage()) {
+						if (p1.getName().charAt(6) == p2.getName().charAt(6)) {
 							return EQUAL;
+						} else {
+							return p1.getName().charAt(6) - p2.getName().charAt(6);
+						}
+					} else {
+						//can't convert to int; precision loss -> unwanted equality
+						if(p1.getMateAgeAverage() - p2.getMateAgeAverage() < 0) {
+							return -1;
+						} else {
+							return 1;
 						}
 					}
+				} else {
+					return p1.getMatesCount() - p2.getMatesCount();
 				}
-
-				return LESSER;
 			}
 		});
 	}
@@ -111,7 +88,7 @@ public class PenguinFun {
 		for(Penguin penguin : penguins) {
 			HashSet<Penguin> set;
 
-			if(result.containsKey(penguin.getRaceAsString())) {
+			if (result.containsKey(penguin.getRaceAsString())) {
 				set = result.get(penguin.getRaceAsString());
 			} else {
 				set = new HashSet<>();
