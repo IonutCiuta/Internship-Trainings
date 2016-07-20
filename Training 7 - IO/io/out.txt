@@ -1,0 +1,26 @@
+ Trainining 7 - IO
+ 	io
+ 		.idea
+ 			compiler.xml
+ 			copyright
+ 				profiles_settings.xml
+ 			description.html
+ 			encodings.xml
+ 			misc.xml
+ 			modules.xml
+ 			workspace.xml
+ 		input
+ 		io.iml
+ 		out
+ 			production
+ 				io
+ 					CharacterCounter.class
+ 					FileReverser.class
+ 					FolderViewer.class
+ 					Main.class
+ 		reversed_input
+ 		src
+ 			CharacterCounter.java
+ 			FileReverser.java
+ 			FolderViewer.java
+ 			Main.java
