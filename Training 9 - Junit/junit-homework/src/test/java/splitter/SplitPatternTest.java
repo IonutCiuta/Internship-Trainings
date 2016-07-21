@@ -1,3 +1,5 @@
+package splitter;
+
 import com.endava.junit.process.SplitPattern;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -16,13 +18,13 @@ public class SplitPatternTest {
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        System.out.println("STARTED: SplitPatternTest");
+        System.out.println("STARTED: splitter.SplitPatternTest");
         splitPattern = new SplitPattern();
     }
 
     @AfterClass
     public static void tearDownAfterClass() {
-        System.out.println("ENDED: SplitPatternTest");
+        System.out.println("ENDED: splitter.SplitPatternTest");
     }
 
     @Test

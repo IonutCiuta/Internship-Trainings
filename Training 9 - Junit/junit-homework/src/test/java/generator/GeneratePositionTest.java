@@ -1,3 +1,5 @@
+package generator;
+
 import com.endava.junit.process.ProcessPattern;
 import org.junit.*;
 
@@ -11,13 +13,13 @@ public class GeneratePositionTest {
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        System.out.println("STARTED: GeneratePositionTest");
+        System.out.println("STARTED: generator.GeneratePositionTest");
         processPattern = new ProcessPattern();
     }
 
     @AfterClass
     public static void tearDownAfterClass() {
-        System.out.println("ENDED: GeneratePositionTest");
+        System.out.println("ENDED: generator.GeneratePositionTest");
     }
 
     @Before
