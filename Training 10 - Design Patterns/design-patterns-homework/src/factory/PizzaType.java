@@ -1,4 +1,4 @@
-package pizza;
+package factory;
 
 /**
  * Created by iciuta on 7/22/2016.

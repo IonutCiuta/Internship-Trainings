@@ -1,4 +1,6 @@
-package pizza;
+package factory;
+
+import factory.pizza.Pizza;
 
 import java.util.ArrayList;
 import java.util.List;

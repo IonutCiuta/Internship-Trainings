@@ -1,4 +1,6 @@
-package pizza;
+package factory;
+
+import factory.pizza.*;
 
 /**
  * Created by iciuta on 7/22/2016.
