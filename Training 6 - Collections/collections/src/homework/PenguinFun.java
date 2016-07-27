@@ -3,7 +3,9 @@ package homework;
 import java.util.*;
 
 public class PenguinFun {
-	private static final int EQUAL   =  0;
+	private static final int EQUAL 		=  0;
+	private static final int LOWER 		= -1;
+	private static final int GREATER 	=  1;
 
 	private static final PenguinHatchery hatchery = new PenguinHatchery();
 
@@ -70,9 +72,9 @@ public class PenguinFun {
 					} else {
 						//can't convert to int; precision loss -> unwanted equality
 						if(p1.getMateAgeAverage() - p2.getMateAgeAverage() < 0) {
-							return -1;
+							return LOWER;
 						} else {
-							return 1;
+							return GREATER;
 						}
 					}
 				} else {

@@ -70,7 +70,7 @@ public class PenguinFunExtra {
     }
 
     private static void efficientTest() {
-        int theChosenIndex = 67;
+        int theChosenIndex = 42; // the answer to everything :)
         Penguin theChosenPenguin = null;
         long start, end;
 
