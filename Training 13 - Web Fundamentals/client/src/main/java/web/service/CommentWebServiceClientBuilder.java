@@ -1,6 +1,8 @@
 package web.service;
 
 import com.google.gson.Gson;
+import dto.Comment;
+import dto.CommentContainer;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
@@ -13,7 +15,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,16 +25,21 @@ public class CommentWebServiceClientBuilder {
 
     public static CommentWebServiceClient build(final String ip) {
         return new CommentWebServiceClient() {
-            private final String URL_SCHEME = "http";
-            private final String URL_PATH_SEGMENT = "restful";
-            private final String URL_PATH_SINGLE_ENDPOINT = "comment";
-            private final String URL_PATH_MULTIPLE_ENDPOINT = "comments";
-            private final int URL_PORT = 8080;
+            /*strings used to display messages*/
+            private final String MESSAGE_SAVE   = "POST";
+            private final String MESSAGE_UPDATE = "PUT";
+            private final String MESSAGE_FIND   = "GET";
+            private final String MESSAGE_DELETE = "DELETE";
+
+            /*strings used to build urls*/
+            private final String URL_SCHEME         = "http";
+            private final String URL_PATH_SEGMENT   = "restful";
+            private final String URL_PATH_ENDPOINT  = "comment";
+            private final int URL_PORT              = 8080;
 
             private final HttpClient client = HttpClientBuilder.create().build();
 
-            public Comment save(Comment comment) {
-                Comment result = null;
+            public void save(Comment comment) {
                 try {
                     String url = getGenericCommentUrl(ip);
                     StringEntity stringEntity = prepareObject(comment);
@@ -42,32 +48,25 @@ public class CommentWebServiceClientBuilder {
                     post.setHeader("Content-type", "application/json");
 
                     HttpResponse response = client.execute(post);
-                    printCode(response);
-                    result = extractResponseAsSingleEntity(response);
+                    printCode(response, MESSAGE_SAVE);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                return result;
             }
 
-            public Comment update(Comment comment) {
-                Comment result = null;
+            public void update(Comment comment) {
                 try {
-                    String url = getGenericCommentUrl(ip);
+                    String url = getSpecificCommentUrl(ip, comment.getId().toString());
                     StringEntity stringEntity = prepareObject(comment);
                     HttpPut put = new HttpPut(url);
                     put.setEntity(stringEntity);
                     put.setHeader("Content-type", "application/json");
 
                     HttpResponse response = client.execute(put);
-                    printCode(response);
-                    result = extractResponseAsSingleEntity(response);
+                    printCode(response, MESSAGE_UPDATE);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                return result;
             }
 
             public Comment findById(Long commentId) {
@@ -77,12 +76,11 @@ public class CommentWebServiceClientBuilder {
                     HttpGet request = new HttpGet(url);
 
                     HttpResponse response = client.execute(request);
-                    printCode(response);
-                    result = extractResponseAsSingleEntity(response);
+                    printCode(response, MESSAGE_FIND);
+                    result = (Comment) responseToObject(response, Comment.class);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
                 return result;
             }
 
@@ -91,25 +89,24 @@ public class CommentWebServiceClientBuilder {
                 try {
                     String url = getGenericCommentUrl(ip);
                     HttpGet request = new HttpGet(url);
-                    request.setHeader("Content-type", "application/x-spring-data+json");
 
                     HttpResponse response = client.execute(request);
-                    printCode(response);
-                    result = extractResponseAsList(response);
+                    printCode(response, MESSAGE_FIND);
+                    CommentContainer container = (CommentContainer) responseToObject(response, CommentContainer.class);
+                    result = container.getEmbeddedData().getComment();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
                 return result;
             }
 
-            public void delete(Long commentId) {
+            public void delete(Comment commentId) {
                 try {
-                    String url = getGenericCommentUrl(ip);
+                    String url = getSpecificCommentUrl(ip, commentId.toString());
                     HttpDelete request = new HttpDelete(url);
 
                     HttpResponse response = client.execute(request);
-                    printCode(response);
+                    printCode(response, MESSAGE_DELETE);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -130,36 +127,26 @@ public class CommentWebServiceClientBuilder {
             }
 
             private String getGenericCommentUrl(String host) {
-                return getUrl(host) + "/" + URL_PATH_SINGLE_ENDPOINT;
+                return getUrl(host) + "/" + URL_PATH_ENDPOINT;
             }
 
             private String getSpecificCommentUrl(String host, String param) {
                 return getGenericCommentUrl(host) + "/" + param;
             }
 
-            private String getAllCommentsUrl(String host) {
-                return getUrl(host) + "/" + URL_PATH_MULTIPLE_ENDPOINT;
-            }
-
             private StringEntity prepareObject(Comment comment) throws IOException{
                 return new StringEntity(initGson().toJson(comment));
             }
 
-            private Comment extractResponseAsSingleEntity(HttpResponse response) throws IOException{
+            private Object responseToObject(HttpResponse response, Class clazz) throws IOException{
                 String content  = EntityUtils.toString(response.getEntity());
                 Gson gson = initGson();
-                return gson.fromJson(content, Comment.class);
+                Object result =  gson.fromJson(content, clazz);
+                return result;
             }
 
-            private List<Comment> extractResponseAsList(HttpResponse response) throws IOException {
-                String content  = EntityUtils.toString(response.getEntity());
-                Gson gson = initGson();
-                Comment[] comments = gson.fromJson(content, Comment[].class);
-                return Arrays.asList(comments);
-            }
-
-            private void printCode(HttpResponse response) {
-                System.out.println("RESPONSE CODE: " + response.getStatusLine().getStatusCode());
+            private void printCode(HttpResponse response, String message) {
+                System.out.println(message + " RESPONSE CODE: " + response.getStatusLine().getStatusCode());
             }
         };
     }

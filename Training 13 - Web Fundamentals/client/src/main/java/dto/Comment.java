@@ -1,22 +1,23 @@
-package web.service;
+package dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by iciuta on 7/27/2016.
  */
-public class Comment {
-    private long id;
+public class Comment implements Serializable{
+    private Long id;
     private String name;
     private String email;
     private String comment;
     private Date date;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
