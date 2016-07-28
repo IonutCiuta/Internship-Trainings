@@ -56,7 +56,7 @@ public class CommentWebServiceClientBuilder {
 
             public void update(Comment comment) {
                 try {
-                    String url = getSpecificCommentUrl(ip, comment.getId().toString());
+                    String url = getSpecificCommentUrl(ip, comment.getId() + "");
                     StringEntity stringEntity = prepareObject(comment);
                     HttpPut put = new HttpPut(url);
                     put.setEntity(stringEntity);
@@ -89,6 +89,7 @@ public class CommentWebServiceClientBuilder {
                 try {
                     String url = getGenericCommentUrl(ip);
                     HttpGet request = new HttpGet(url);
+                    request.setHeader("Content-type", "application/json");
 
                     HttpResponse response = client.execute(request);
                     printCode(response, MESSAGE_FIND);
@@ -102,7 +103,7 @@ public class CommentWebServiceClientBuilder {
 
             public void delete(Comment commentId) {
                 try {
-                    String url = getSpecificCommentUrl(ip, commentId.toString());
+                    String url = getSpecificCommentUrl(ip, commentId.getId() + "");
                     HttpDelete request = new HttpDelete(url);
 
                     HttpResponse response = client.execute(request);
@@ -113,8 +114,7 @@ public class CommentWebServiceClientBuilder {
             }
 
             private Gson initGson() {
-                Gson gson = new Gson();
-                return gson;
+                return new Gson();
             }
 
             private String getUrl(String host) {
