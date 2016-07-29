@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.dorel</groupId>
+		<artifactId>dorel-local-deployment</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	
+	<artifactId>dorel-tomcat</artifactId>	
+	
+	<properties>
+		<main.basedir>${project.parent.parent.basedir}</main.basedir>
+		<dorel-ui.version>${project.version}</dorel-ui.version>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.dorel</groupId>
+			<artifactId>dorel-ui</artifactId>
+			<version>${dorel-ui.version}</version>
+			<type>war</type>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven.antrun.plugin.version}</version>
+				<executions>
+					<!-- 1. Stop the Tomcat server using the stop batch script. -->
+					<execution>
+						<id>stop-tomcat-server</id>
+						<phase>pre-clean</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<exec executable="${run.command}">									
+									<arg line="${run.command.additional.arg} ${tomcat.stop.script} ${tomcat.port}"/>
+								</exec>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>			
+			
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>${apache.tomcat7.version}</version>
+				<configuration>
+					<port>${tomcat.port}</port>
+					<path>${java.application.path}</path>
+				</configuration>
+				<executions>
+					<!-- 2. Deploy the Web application to the embeded Tomcat server. -->
+					<execution>
+						<id>start-tomcat</id>
+						<phase>install</phase>
+						<goals>
+							<goal>run-war</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

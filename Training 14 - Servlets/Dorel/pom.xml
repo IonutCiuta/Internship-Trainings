@@ -1,0 +1,81 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.dorel</groupId>
+	<artifactId>dorel-ui-parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	<name>Parent of D.O.R.E.L.</name>
+	
+	<properties>
+		<!-- Maven -->
+		<maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
+		<maven.antrun.plugin.version>1.8</maven.antrun.plugin.version>
+		<maven.clean.plugin.version>3.0.0</maven.clean.plugin.version>
+		<properties.maven.plugin>1.0.0</properties.maven.plugin>		
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<jdk.version>1.7</jdk.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+						
+		<!-- Apache -->
+		<apache.commons.codec.version>1.10</apache.commons.codec.version>
+		<apache.commons.io.version>2.5</apache.commons.io.version>
+		<apache.commons.collections4.version>4.1</apache.commons.collections4.version>
+		<apache.commons.lang3.version>3.4</apache.commons.lang3.version>
+		<apache.commons.configuration2.version>2.0</apache.commons.configuration2.version>
+		<apache.cxf.version>3.1.6</apache.cxf.version>
+		<apache.tomcat7.version>2.2</apache.tomcat7.version>
+		
+		<!-- Spring -->
+		<spring.version>4.2.6.RELEASE</spring.version>
+		<spring.data.jpa.version>1.10.1.RELEASE</spring.data.jpa.version>		
+		
+		<!-- Jackson -->
+		<jackson.version>2.7.4</jackson.version>
+		
+		<!-- Database -->
+		<hibernate.version>5.1.0.Final</hibernate.version>
+		<javax.persistence.version>2.1.1</javax.persistence.version>
+		<hsqldb.version>2.3.3</hsqldb.version>
+		
+		<!-- Testing -->
+		<junit.version>4.12</junit.version>
+		<robotframework.version>3.0</robotframework.version>
+		
+		<!-- Java Servlet -->
+		<javax.servlet.version>3.1.0</javax.servlet.version>
+		
+		<!-- Properties -->		
+		<main.basedir>${project.basedir}</main.basedir>
+						
+	</properties>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>${properties.maven.plugin}</version>
+				<executions>
+					<execution>
+						<phase>pre-clean</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>${main.basedir}/dorel-ui.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<modules>		
+		<module>dorel-ui</module>
+		<module>local-deployment</module>		
+	</modules>
+</project>

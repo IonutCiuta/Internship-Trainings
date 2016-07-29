@@ -1,0 +1,162 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.dorel</groupId>
+		<artifactId>dorel-local-deployment</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>dorel-database</artifactId>
+	<packaging>pom</packaging>
+
+	<properties>
+		<main.basedir>${project.parent.parent.basedir}</main.basedir>
+	</properties>
+	
+	<build>
+		<plugins>
+			<!-- 1. Download HSQLDB from nexus -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${maven.dependency.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.hsqldb</groupId>
+									<artifactId>hsqldb</artifactId>
+									<version>${hsqldb.version}</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>									
+									<outputDirectory>${project.build.directory}/hsqlServer</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.hsqldb</groupId>
+									<artifactId>sqltool</artifactId>
+									<version>${hsqldb.version}</version>
+									<type>jar</type>									
+									<overWrite>false</overWrite>
+								<outputDirectory>${project.build.directory}/hsqlServer</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+							<stripVersion>true</stripVersion>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven.antrun.plugin.version}</version>
+				<executions>
+					<!-- 2. Stop the HSQL server using the stop batch script. -->
+					<execution>
+						<id>stop-hsql-server</id>
+						<phase>pre-clean</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<exec executable="${run.command}">									
+									<arg line="${run.command.additional.arg} ${hsql.stop.script} ${hsql.port}"/>
+								</exec>
+							</target>
+						</configuration>
+					</execution>			
+					
+					<!-- 2.1. Stop the external HSQL server using the stop batch script. -->
+					<execution>
+						<id>stop-hsql-server-external</id>
+						<phase>pre-clean</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<exec executable="${run.command}">									
+									<arg line="${run.command.additional.arg} ${hsql.stop.script} ${hsql.port.external}"/>
+								</exec>
+							</target>
+						</configuration>
+					</execution>			
+					
+					<!-- 3. Start the HSQL server using the start batch script. -->
+					<execution>
+						<id>start-hsql-server</id>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<exec executable="${run.command}" spawn="true">									
+									<arg line="${run.command.additional.arg} ${hsql.start.script} ${hsql.port} ${hsql.database.file.name} ${hsql.database.name}"/>
+								</exec>
+							</target>
+						</configuration>
+					</execution>
+					
+					<!-- 3.1 Start the external HSQL server using the start batch script. -->
+					<execution>
+						<id>start-hsql-server-external</id>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<exec executable="${run.command}" spawn="true">									
+									<arg line="${run.command.additional.arg} ${hsql.start.script} ${hsql.port.external} ${hsql.database.file.name.external} ${hsql.database.name.external}"/>
+								</exec>
+							</target>
+						</configuration>
+					</execution>
+					
+					<!-- 4. Populate the HSQL database. ${host} ${hsql.port} ${hsql.database.name} ${hsql.database.username}-->
+					<execution>
+						<id>populate-hsql-server</id>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<exec executable="${run.command}">									
+									<arg line="${run.command.additional.arg} ${hsql.populate.script} ${hsqldb.ddl.sql.script} ${hsqldb.insert.sql.script} ${host} ${hsql.port} ${hsql.database.name} ${hsql.database.username} ${hsql.database.password}"/>
+								</exec>
+							</target>
+						</configuration>
+					</execution>
+					
+					<!-- 4.1 Populate the external HSQL database. ${host} ${hsql.port.external} ${hsql.database.name.external} ${hsql.database.username.external}-->
+					<execution>
+						<id>populate-hsql-server-external</id>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<exec executable="${run.command}">									
+									<arg line="${run.command.additional.arg} ${hsql.populate.script} ${hsqldb.ddl.sql.script.external} ${hsqldb.insert.sql.script.external} ${host} ${hsql.port.external} ${hsql.database.name.external} ${hsql.database.username.external} ${hsql.database.password.external}"/>
+								</exec>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

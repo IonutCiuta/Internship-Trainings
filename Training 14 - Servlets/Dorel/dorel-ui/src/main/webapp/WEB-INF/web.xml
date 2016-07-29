@@ -1,0 +1,70 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" version="2.4"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http:/java.sun.com/dtd/web-app_2_3.dtd">
+
+	<!-- First Servlet -->
+	<servlet>
+		<servlet-name>HelloWorld</servlet-name>
+		<servlet-class>com.dorel.servlets.HelloWorldServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>HelloWorld</servlet-name>
+		<url-pattern>/hello-world</url-pattern>
+	</servlet-mapping>
+	<!-- First Servlet -->
+
+	<welcome-file-list>
+		<welcome-file>NewFile.jsp</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>PressingButtonsJSP</servlet-name>
+		<jsp-file>/PressingButtons.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PressingButtonsJSP</servlet-name>
+		<url-pattern>/pressing-buttons</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>InputJSP</servlet-name>
+		<jsp-file>/Input.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InputJSP</servlet-name>
+		<url-pattern>/input</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ScriptletsJSP</servlet-name>
+		<jsp-file>/Scriptlets.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ScriptletsJSP</servlet-name>
+		<url-pattern>/scriptlets</url-pattern>
+	</servlet-mapping>
+
+<!-- 
+	<servlet>
+		<servlet-name>ExpressionLanguageJSP</servlet-name>
+		<jsp-file>/ExpressionLanguage.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ExpressionLanguageJSP</servlet-name>
+		<url-pattern>/expression-language</url-pattern>
+	</servlet-mapping>-->
+
+	<servlet>
+		<servlet-name>UsersJSP</servlet-name>
+		<jsp-file>/Users.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UsersJSP</servlet-name>
+		<url-pattern>/users</url-pattern>
+	</servlet-mapping>
+
+
+
+
+</web-app>

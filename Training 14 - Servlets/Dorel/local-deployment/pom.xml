@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.dorel</groupId>
+		<artifactId>dorel-ui-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	
+	<artifactId>dorel-local-deployment</artifactId>	
+	<packaging>pom</packaging>
+	
+	<properties>
+		<main.basedir>${project.parent.basedir}</main.basedir>
+	</properties>
+	
+	<profiles>
+		<!-- OS dependant scripts necessary for the setup and deployment of the application -->
+		<profile>
+			<id>windows</id>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<properties>
+				<run.command>cmd</run.command>
+				<run.command.additional.arg>/c</run.command.additional.arg>				
+				<hsql.stop.script>stopHSQLServerWindows.bat</hsql.stop.script>
+				<hsql.start.script>startHSQLServerWindows.bat</hsql.start.script>
+				<hsql.populate.script>populateHSQLDatabaseWindows.bat</hsql.populate.script>
+				<tomcat.start.script>startTomcatServerWindows.bat</tomcat.start.script>
+				<tomcat.stop.script>stopTomcatServerWindows.bat</tomcat.stop.script>
+			</properties>
+		</profile>
+	</profiles>
+	
+	<modules>		
+		<module>start-hsql</module>	
+		<!--module>start-tomcat</module-->
+	</modules>
+</project>
