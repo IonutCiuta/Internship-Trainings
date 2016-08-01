@@ -1,0 +1,11 @@
+- factura cu pretul cel mai mare
+- produsul care s-a vandut cel mai bine ( cu cele mai multe incasari)
+/produsul cu cea mai mare cantitate vanduta
+- toti clientii impreuna cu suma cumparaturilor / suma facturilor pe care le au
+- toti clientii care au valoarea totala a tva-ului ( procent peste pret) > o valoare specificata 
+- media vanzarilor pe zi si pe client
+ 
+produs -> idProdus, tva(procent) De ex: 0.06, nume produs, cod produs
+detaliu factura -> idDetaliuFactura, pret produs, cantitate
+client -> idClient, nume client, cui, descriere
+factura -> idFactura, data factura, serie factura 

@@ -1,0 +1,8 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persitence"
+	version="2.0">
+
+	<persistence-unit name="punit">
+	
+	</persistence-unit>
+
+</persistence>
