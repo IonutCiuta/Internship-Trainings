@@ -26,3 +26,10 @@ create table if not exists project (
 	project_manager varchar(100),
 	description varchar(500)
 );
+
+create table if not exists upload (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    filename varchar(100) NOT NULL,
+	path varchar(100) NOT NULL,
+    size int
+);

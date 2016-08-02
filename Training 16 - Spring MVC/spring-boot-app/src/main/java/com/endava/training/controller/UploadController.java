@@ -5,7 +5,6 @@ import com.endava.training.model.Upload;
 import com.endava.training.service.UploadService;
 import com.endava.training.service.ViewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,9 +31,6 @@ public class UploadController {
 
     @Autowired
     private ViewService viewService;
-
-    @Autowired
-    private ResourceLoader resourceLoader;
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
