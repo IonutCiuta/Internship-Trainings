@@ -1,3 +1,12 @@
 .title {
-	color: green;
+	color: tomato;
+	font-weight: bold;
+	font-size: 60;
+	text-align: center;
+	padding-top: 80;
+	padding-bottom: 80;
+}
+
+.table {
+	margin: 0 auto;
 }
