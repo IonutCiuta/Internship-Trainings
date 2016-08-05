@@ -7,17 +7,24 @@
 	</title>
 	<body>
 		<p class="title">Sign In</p>
-		<div>
-			<table>
+		
+		<div class="panel">
+			<form>
+				<table class="table">
 				<tr>
-					<td>Username</td>
-					<td><input/></td>
+					<td><input class="field" type="text" name="username" placeholder="Username"/></td>
 				</tr>
-				<tr><td><input/></td></tr>
-				<tr><td><input/></td></tr>
-				<tr><td><input/></td></tr>
-				<tr><td><button>Login</button></td></tr>
-			</table>
+				<tr>
+					<td><input class="field" type="password" name="password" placeholder="Password"/></td>
+				</tr>
+				<tr>
+					<td><input class="field" type="text" name="code" placeholder="Verification code"/></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="Sign In"></td>
+				</tr>
+				</table>
+			</form>
 		</div>
 	</body>
 </html>
